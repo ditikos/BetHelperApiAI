@@ -15,5 +15,6 @@ module.exports = {
     general: {
         is_dev: false
     },
-    api_endpoint_version: 'v1'
+    api_endpoint_version: 'v1',
+    apiai_key: 'bdea62fa81774cc099c8b076618b985a'
 };

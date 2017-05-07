@@ -1,12 +1,33 @@
 // import mongodb
+const config = require('../config');
 const {MongoClient} = require('mongodb');
 
-MongoClient.connect('mongodb://localhost:27017/BetServiceInfoDB', (err, db) => {
+let login_cred = "";
+if (config.mongodb.user_auth) {
+    login_cred = `${config.mongodb.username}:${config.mongodb.password}@`
+}
+let mongo_url = `mongodb://${login_cred}${config.mongodb.url}:${config.mongodb.port}/${config.mongodb.db_name}`;
+
+MongoClient.connect(mongo_url, (err, db) => {
     if (err) {
         return console.log('Unable to connect to MongoDB Server.');
     }
     console.log('Connected to MongoDB Server.');
 
+    db.collection('Bets').insertOne({
+        title: 'Single',
+        description: 'A Single is a bet on 1 selection in 1 event. If your selection wins, so do you.',
+        number_of_selections: 1,
+        bet_type_1: ['WIN', 'PLACE'],
+        bet_type_2: 'SINGLE'
+    }, (err, result) => {
+        if (err) {
+            return console.log('Unable to insert Bet Info: ', err);
+        }
+        console.log(JSON.stringify(result.ops, undefined, 2));
+    });
+
+/*
     db.collection('Bets').insertOne({
         title: 'Double',
         description: 'A Double is 1 bet made up of 2 selections in different events. Both selections must be successful for your bet to win.',
@@ -45,6 +66,8 @@ MongoClient.connect('mongodb://localhost:27017/BetServiceInfoDB', (err, db) => {
         }
         console.log(JSON.stringify(result.ops, undefined, 2));
     });
+*/
+
 
     db.close();
 });

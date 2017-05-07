@@ -17,3 +17,4 @@ if (config.mongodb.user_auth) {
 }
 let mongo_url = `mongodb://${login_cred}${config.mongodb.url}:${config.mongodb.port}/${config.mongodb.db_name}`;
 console.log(`Connect to mongo_url: ${mongo_url}`);
+
