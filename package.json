@@ -2,7 +2,7 @@
   "name": "bet_helper_api_ai",
   "version": "1.0.0",
   "description": "Bet Helper with api.ai",
-  "main": "server.js",
+  "main": "service.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,6 +24,7 @@
   "dependencies": {
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
+    "lodash": "^4.17.4",
     "mongodb": "^2.2.26"
   },
   "devDependencies": {
