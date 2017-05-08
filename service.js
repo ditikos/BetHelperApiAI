@@ -10,11 +10,24 @@ const body_parser = require('body-parser');
 const app = express();
 app.use(body_parser.json());
 
-console.log(`Defaults: ${JSON.stringify(config, undefined, 2)}`);
-let login_cred = "";
-if (config.mongodb.user_auth) {
-    login_cred = `${config.mongodb.username}:${config.mongodb.password}@`
-}
-let mongo_url = `mongodb://${login_cred}${config.mongodb.url}:${config.mongodb.port}/${config.mongodb.db_name}`;
-console.log(`Connect to mongo_url: ${mongo_url}`);
+app.post('/webhook', (req, res) => {
+    //console.log(req.body);
+    var action = req.body.result.action;
+    console.log(`Parameters from intent: ${JSON.stringify(req.body.result.parameters, undefined, 2)}`);
+    switch (action) {
+        case "postBetPlace":
+            console.log('Place a bet');
+            
+        break;
+        case "getBetInfo":
+            console.log('Get some info about a bet');
+        break;
+        default:
+            console.log("This is the default one.");
+    }
+    res.status(500).send();
+});
 
+app.listen(8000, () => {
+    console.log('Service started at 8000');
+});
